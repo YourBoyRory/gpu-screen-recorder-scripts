@@ -1,19 +1,30 @@
 #!/bin/bash
 
-echo "notify"
+display=$(grep -oP '^main.record_area_option \K.*' ~/.config/gpu-screen-recorder/config)
+posx=$(xrandr --verbose | grep $display | cut -d'+' -f2)
+posy=$(xrandr --verbose | grep $display | grep -oP '\d+x1080' | awk -F'x' '{print $2}')
+if [[ "$posx" == "" || "$posy" == "" ]]; then
+    display=$(xrandr --verbose | grep 'primary' | cut -d' ' -f1)
+    posx=$(xrandr --verbose | grep $display | cut -d'+' -f2)
+    posy=$(xrandr --verbose | grep $display | grep -oP '\d+x1080' | awk -F'x' '{print $2}')
+fi
+
+# Uncomment these out if tou want to specify your own location
+# posx=0
+ posy=0
+
 
 startSplash() {
     yad \
         --no-buttons \
-        --splash \
         --on-top \
         --skip-taskbar \
         --undecorated \
         --no-focus \
         --no-escape \
         --timeout=$1 \
-        --posx=1920 \
-        --posy=1080 \
+        --posx=$posx \
+        --posy=$posy \
         --borders=0 \
         --image=$2
 }
