@@ -1,5 +1,7 @@
 #!/bin/bash
 
+icon_dir="/opt/gpu-screen-recorder-scripts/assets"
+
 display=$(grep -oP '^main.record_area_option \K.*' ~/.config/gpu-screen-recorder/config)
 posx=$(xrandr --verbose | grep $display | cut -d'+' -f2)
 posy=$(xrandr --verbose | grep $display | grep -oP '\d+x1080' | awk -F'x' '{print $2}')
@@ -15,7 +17,7 @@ fi
 
 
 startSplash() {
-    yad \
+    GDK_BACKEND=x11 yad \
         --no-buttons \
         --on-top \
         --skip-taskbar \
@@ -26,7 +28,7 @@ startSplash() {
         --posx=$posx \
         --posy=$posy \
         --borders=0 \
-        --image=$2
+        --image=$icon_dir/$2.png
 }
 
 if [[ "$1" == "start" ]]; then
