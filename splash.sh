@@ -13,7 +13,7 @@ fi
 
 # Uncomment these out if tou want to specify your own location
 # posx=0
- posy=0
+# posy=0
 
 
 startSplash() {
@@ -23,6 +23,7 @@ startSplash() {
         --skip-taskbar \
         --undecorated \
         --no-focus \
+        --splash \
         --no-escape \
         --timeout=$1 \
         --posx=$posx \
