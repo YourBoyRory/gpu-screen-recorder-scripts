@@ -1,9 +1,11 @@
 #!/bin/bash
 
-SCRIPT_DIR=$(dirname "$0")/splash.sh
-echo $SCRIPT_DIR
+#SCRIPT_DIR=$(dirname "$0")./splash.sh
+#echo $SCRIPT_DIR
+echo $$
 
-sh $SCRIPT_DIR start &
+sh ../splash.sh start &
+child=$!
 
 video_path="$HOME/Videos/$1"
 mkdir -p "$video_path"
@@ -18,4 +20,4 @@ gpu-screen-recorder \
     -r 30 \
     -o "$video_path" \
 
-killall yad
+pkill -TERM -P $child
